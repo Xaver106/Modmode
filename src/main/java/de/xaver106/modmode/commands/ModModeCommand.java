@@ -15,9 +15,9 @@ public class ModModeCommand implements CommandExecutor {
     private final ModMode pluginInstance;
     private final PlayerHandler playerHandler;
 
-    public ModModeCommand(ModMode plugin, PlayerHandler pPlayerHandler){
-        pluginInstance = plugin;
-        playerHandler = pPlayerHandler;
+    public ModModeCommand(ModMode pluginInstance, PlayerHandler playerHandler){
+        this.pluginInstance = pluginInstance;
+        this.playerHandler = playerHandler;
 
     }
 

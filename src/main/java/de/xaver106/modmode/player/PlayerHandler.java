@@ -22,11 +22,11 @@ public class PlayerHandler {
     /**
      * Instantiates a new Player handler.
      *
-     * @param plugin The Plugin Instance
+     * @param pluginInstance The Plugin Instance
      */
-    public PlayerHandler(ModMode plugin) {
+    public PlayerHandler(ModMode pluginInstance) {
 
-        pluginInstance = plugin;
+        this.pluginInstance = pluginInstance;
         dataFolder = pluginInstance.getDataFolder() + File.separator + "players";
 
         playerFileList = new HashMap<>();

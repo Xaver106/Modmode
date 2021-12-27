@@ -21,13 +21,13 @@ public class PlayerFile {
     /**
      * Instantiates a new Player file.
      *
-     * @param file   The File to save to.
-     * @param plugin The Plugin Instance.
+     * @param playerFile   The File to save to.
+     * @param pluginInstance The Plugin Instance.
      */
-    public PlayerFile(File file, Plugin plugin) {
+    public PlayerFile(File playerFile, Plugin pluginInstance) {
 
-        pluginInstance = plugin;
-        playerFile = file;
+        this.pluginInstance = pluginInstance;
+        this.playerFile = playerFile;
 
         if (playerFile.exists() && !playerFile.isDirectory()) { // If the File exists load it
             yamlFile = YamlConfiguration.loadConfiguration(playerFile);
