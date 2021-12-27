@@ -1,0 +1,12 @@
+name: ModMode
+version: '${project.version}'
+main: de.xaver106.modmode.ModMode
+api-version: 1.17
+authors: [ Xaver106 ]
+commands:
+  modmode:
+    description: Toggles the Mod Mode
+    usage: /modmode
+    aliases:
+      - modswitch
+      - mmode
