@@ -30,7 +30,7 @@ public class ModModeCommand implements CommandExecutor {
             PlayerFile playerFile = playerHandler.getPlayerFile(player);
 
             if (playerFile.getMode()){
-                //Deaktivate Modmode
+                // Deactivate Modmode
                 player.getInventory().setContents(playerFile.getInventory());
                 player.getInventory().setArmorContents(playerFile.getArmor());
                 player.updateInventory();
@@ -42,7 +42,7 @@ public class ModModeCommand implements CommandExecutor {
                 player.sendRawMessage(Color.RED + "You are no longer a Mod!");
                 player.setGameMode(GameMode.SURVIVAL);
             }else{
-                //Activate Modmode
+                // Activate Modmode
                 playerFile.setInventory(player.getInventory().getContents());
                 playerFile.setArmor(player.getInventory().getArmorContents());
                 playerFile.setEndChest(player.getEnderChest().getContents());
