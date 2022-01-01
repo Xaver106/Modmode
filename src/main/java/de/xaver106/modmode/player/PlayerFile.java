@@ -1,182 +1,68 @@
 package de.xaver106.modmode.player;
 
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Level;
+import java.util.Collection;
 
 /**
- * Provides the Configuration for individual players.
+ * The interface Player file.
  */
-public class PlayerFile {
-
-    private YamlConfiguration yamlFile;
-    private final File playerFile;
-    private final Plugin pluginInstance;
-
-    /**
-     * Instantiates a new Player file.
-     *
-     * @param playerFile   The File to save to.
-     * @param pluginInstance The Plugin Instance.
-     */
-    public PlayerFile(File playerFile, Plugin pluginInstance) {
-
-        this.pluginInstance = pluginInstance;
-        this.playerFile = playerFile;
-
-        if (playerFile.exists() && !playerFile.isDirectory()) { // If the File exists load it
-            yamlFile = YamlConfiguration.loadConfiguration(playerFile);
-
-        } else { // If not create new File
-            yamlFile = new YamlConfiguration();
-            yamlFile.set("isMod", false);
-            try {
-                yamlFile.save(playerFile);
-            } catch (IOException e) {
-                pluginInstance.getLogger().log(Level.SEVERE, "Unable to create new Player File:" + playerFile.getName());
-            }
-        }
-    }
+public interface PlayerFile {
 
     /**
      * Saves the changes made to disk.
      */
-    public void saveFile() {
-        try {
-            yamlFile.save(playerFile);
-        } catch (IOException e) {
-            pluginInstance.getLogger().log(Level.SEVERE, "Unable to save Player File:" + playerFile.getName());
-        }
-    }
+    void saveFile();
 
     /**
      * Reloads the configuration (Saves it and loads it back)
      */
-    public void reloadFile() {
-
-        saveFile();
-
-        yamlFile = YamlConfiguration.loadConfiguration(playerFile);
-    }
+    void reloadFile();
 
     /**
-     * Sets mode.
+     * Sets Data to path.
      *
-     * @param isMod the is mod
+     * @param path  the path
+     * @param value the value
      */
-    public void setMode(Boolean isMod) {
-        yamlFile.set("isMod", isMod);
-        saveFile();
-    }
+    void set(String path, Object value);
+
+    void setLocation(String path, Location location);
+
 
     /**
-     * Gets mode.
+     * Gets a boolean Value from path.
      *
-     * @return the mode
+     * @param path the path
+     * @return the bool
      */
-    public Boolean getMode() {
-        return yamlFile.getBoolean("isMod");
-    }
+    boolean getBool(String path);
+
+    double getDouble(String path);
+
+    float getFloat(String path);
+
+    int getInt(String path);
+
+    Location getLocation(String path);
 
     /**
-     * Sets inventory.
+     * Gets an itemStack Liste from path.
      *
-     * @param inventory the inventory
-     */
-    public void setInventory(ItemStack[] inventory) {
-        yamlFile.set("inventory", inventory);
-        saveFile();
-    }
-
-    /**
-     * Get inventory item stack [ ].
-     *
+     * @param path the path
      * @return the item stack [ ]
      */
-    public ItemStack[] getInventory() {
-        return extractItemStacks("inventory");
-    }
+    ItemStack[] getItemStacks(String path);
 
     /**
-     * Remove inventory.
-     */
-    public void removeInventory() {
-        yamlFile.set("inventory", null);
-        saveFile();
-    }
-
-    /**
-     * Sets armor.
+     * Removes value at path.
      *
-     * @param armor the armor
+     * @param path the path
      */
-    public void setArmor(ItemStack[] armor) {
-        yamlFile.set("armor", armor);
-        saveFile();
-    }
+    void remove(String path);
 
-    /**
-     * Get armor item stack [ ].
-     *
-     * @return the item stack [ ]
-     */
-    public ItemStack[] getArmor() {
-        return extractItemStacks("armor");
-    }
+    Collection<PotionEffect> getPotionEffects(String path);
 
-    /**
-     * Remove armor.
-     */
-    public void removeArmor() {
-        yamlFile.set("armor", null);
-        saveFile();
-    }
-
-    /**
-     * Sets end chest.
-     *
-     * @param endChest the end chest
-     */
-    public void setEndChest(ItemStack[] endChest) {
-        yamlFile.set("endChest", endChest);
-        saveFile();
-    }
-
-    /**
-     * Get end chest item stack [ ].
-     *
-     * @return the item stack [ ]
-     */
-    public ItemStack[] getEndChest() {
-        return extractItemStacks("endChest");
-    }
-
-    /**
-     * Remove end chest.
-     */
-    public void removeEndChest() {
-        yamlFile.set("endChest", null);
-        saveFile();
-    }
-
-    /**
-     * Internal use only method to extract ItemStack Arrays from the configuration.
-     *
-     * @param path path of the ItemStacks to extract
-     * @return The extracted and deserialized ItemStack Array
-     */
-    @SuppressWarnings("unchecked")
-    private ItemStack[] extractItemStacks(String path) {
-
-        reloadFile(); // Reload required, doesn't load correctly without.
-
-        ArrayList<ItemStack> returnValue = (ArrayList<ItemStack>) yamlFile.getList(path, new ArrayList<ItemStack>());
-
-        return returnValue.toArray(new ItemStack[0]);
-    }
 }

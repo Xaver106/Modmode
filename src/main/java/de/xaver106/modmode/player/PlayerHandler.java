@@ -16,7 +16,7 @@ public class PlayerHandler {
     private final String fileEnding = ".inv";
     private final String dataFolder;
 
-    private final HashMap<UUID, PlayerFile> playerFileList;
+    private final HashMap<UUID, PlayerFileYAML> playerFileList;
     private final ModMode pluginInstance;
 
     /**
@@ -47,18 +47,18 @@ public class PlayerHandler {
         File[] directoryListing = new File(dataFolder).listFiles();
         if (directoryListing != null) {
             for (File child : directoryListing) {
-                playerFileList.put(UUID.fromString(child.getName().replace(fileEnding, "")), new PlayerFile(child, pluginInstance));
+                playerFileList.put(UUID.fromString(child.getName().replace(fileEnding, "")), new PlayerFileYAML(child, pluginInstance));
             }
         }
     }
 
     /**
      * Saves all PlayerFiles to Disk
-     * {@link PlayerFile#saveFile()}
+     * {@link PlayerFileYAML#saveFile()}
      */
     public void saveFiles() {
-        for (PlayerFile playerFile : playerFileList.values()) {
-            playerFile.saveFile();
+        for (PlayerFileYAML playerFileYAML : playerFileList.values()) {
+            playerFileYAML.saveFile();
         }
     }
 
@@ -68,10 +68,10 @@ public class PlayerHandler {
      * @param uuid UUID of the Player.
      * @return PlayerFile of the Player
      */
-    public PlayerFile getPlayerFile(UUID uuid) {
+    public PlayerFileYAML getPlayerFile(UUID uuid) {
 
         if (!playerFileList.containsKey(uuid)) {
-            playerFileList.put(uuid, new PlayerFile(new File(dataFolder, uuid + fileEnding), pluginInstance));
+            playerFileList.put(uuid, new PlayerFileYAML(new File(dataFolder, uuid + fileEnding), pluginInstance));
         }
         return playerFileList.get(uuid);
     }
@@ -82,7 +82,7 @@ public class PlayerHandler {
      * @param player the Player Object of the player.
      * @return PlayerFile of the Player {@link PlayerHandler#getPlayerFile(UUID)}
      */
-    public PlayerFile getPlayerFile(Player player) {
+    public PlayerFileYAML getPlayerFile(Player player) {
 
         return getPlayerFile(player.getUniqueId());
     }

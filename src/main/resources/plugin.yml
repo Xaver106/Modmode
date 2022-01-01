@@ -3,6 +3,9 @@ version: '${project.version}'
 main: de.xaver106.modmode.ModMode
 api-version: 1.17
 authors: [ Xaver106 ]
+
+softdepend: [LuckPerms]
+
 commands:
   modmode:
     description: Toggles the Mod Mode
