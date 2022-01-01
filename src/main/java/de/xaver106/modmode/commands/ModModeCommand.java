@@ -83,4 +83,3 @@ public class ModModeCommand implements CommandExecutor {
         for (PotionEffect effect : player.getActivePotionEffects())
             player.removePotionEffect(effect.getType());
     }
-}
