@@ -1,8 +1,6 @@
 package de.xaver106.modmode.commands;
 
-import de.xaver106.modmode.ModMode;
 import de.xaver106.modmode.player.PlayerFile;
-import de.xaver106.modmode.player.PlayerFileYAML;
 import de.xaver106.modmode.player.PlayerHandler;
 import org.bukkit.Color;
 import org.bukkit.GameMode;
@@ -13,11 +11,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
-public class ModModeCommand implements CommandExecutor{
+public class ModModeCommand implements CommandExecutor {
 
     private final PlayerHandler playerHandler;
 
-    public ModModeCommand(PlayerHandler playerHandler){
+    public ModModeCommand(PlayerHandler playerHandler) {
         this.playerHandler = playerHandler;
 
     }
@@ -26,12 +24,12 @@ public class ModModeCommand implements CommandExecutor{
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
 
-        if (sender instanceof Player player){
+        if (sender instanceof Player player) {
 
             PlayerFile playerFile = playerHandler.getPlayerFile(player);
 
-            if (playerFile.getBool("Mode")){
-                //Deaktivate Modmode
+            if (playerFile.getBool("Mode")) {
+                //Deactivate Modmode
                 //Inventorys
                 player.getInventory().setContents(playerFile.getItemStacks("inventory"));
                 player.getInventory().setArmorContents(playerFile.getItemStacks("armor"));
@@ -50,7 +48,7 @@ public class ModModeCommand implements CommandExecutor{
 
                 player.sendRawMessage(Color.RED + "You are no longer a Mod!");
                 player.setGameMode(GameMode.SURVIVAL);
-            }else{
+            } else {
                 //Activate Modmode
                 //Inventorys
                 playerFile.set("inventory", player.getInventory().getContents());
@@ -81,7 +79,7 @@ public class ModModeCommand implements CommandExecutor{
         return true;
     }
 
-    private void clearPlayerPotionEffects(Player player){
+    private void clearPlayerPotionEffects(Player player) {
         for (PotionEffect effect : player.getActivePotionEffects())
             player.removePotionEffect(effect.getType());
     }

@@ -10,7 +10,6 @@ import org.bukkit.potion.PotionEffect;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Level;
@@ -18,7 +17,7 @@ import java.util.logging.Level;
 /**
  * Provides the Configuration for individual players.
  */
-public class PlayerFileYAML implements PlayerFile{
+public class PlayerFileYAML implements PlayerFile {
 
     private YamlConfiguration yamlFile;
     private final File playerFile;
@@ -76,12 +75,12 @@ public class PlayerFileYAML implements PlayerFile{
      * @param path  the path
      * @param value the value
      */
-    public void set(String path, Object value){
+    public void set(String path, Object value) {
         yamlFile.set(path, value);
         saveFile();
     }
 
-    public void setLocation(String path, Location location){
+    public void setLocation(String path, Location location) {
         String world = location.getWorld().getName();
         double x = location.getX();
         double y = location.getY();
@@ -97,7 +96,7 @@ public class PlayerFileYAML implements PlayerFile{
         set(path + ".pitch", pitch);
     }
 
-    public Location getLocation(String path){
+    public Location getLocation(String path) {
         World world = Bukkit.getWorld(getString(path + ".world"));
         double x = getDouble(path + ".x");
         double y = getDouble(path + ".y");
@@ -108,11 +107,11 @@ public class PlayerFileYAML implements PlayerFile{
         return new Location(world, x, y, z, yaw, pitch);
     }
 
-    public boolean getBool(String path){
+    public boolean getBool(String path) {
         return yamlFile.getBoolean(path);
     }
 
-    public String getString(String path){
+    public String getString(String path) {
         return yamlFile.getString(path);
     }
 
@@ -121,11 +120,11 @@ public class PlayerFileYAML implements PlayerFile{
         return yamlFile.getDouble(path);
     }
 
-    public int getInt(String path){
+    public int getInt(String path) {
         return yamlFile.getInt(path);
     }
 
-    public float getFloat(String path){
+    public float getFloat(String path) {
         return (float) yamlFile.getDouble(path);
     }
 
@@ -152,7 +151,7 @@ public class PlayerFileYAML implements PlayerFile{
      * @return the potion effect [ ]
      */
     @SuppressWarnings("unchecked")
-    public Collection<PotionEffect> getPotionEffects(String path){
+    public Collection<PotionEffect> getPotionEffects(String path) {
 
         reloadFile(); // Reload required, doesn't load correctly without.
 
