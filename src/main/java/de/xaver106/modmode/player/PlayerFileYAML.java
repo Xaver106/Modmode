@@ -64,7 +64,7 @@ public class PlayerFileYAML implements PlayerFile {
      */
     public void reloadFile() {
 
-        saveFile();
+        this.saveFile();
 
         yamlFile = YamlConfiguration.loadConfiguration(playerFile);
     }
@@ -77,7 +77,7 @@ public class PlayerFileYAML implements PlayerFile {
      */
     public void set(String path, Object value) {
         yamlFile.set(path, value);
-        saveFile();
+        this.saveFile();
     }
 
     public void setLocation(String path, Location location) {
@@ -88,12 +88,12 @@ public class PlayerFileYAML implements PlayerFile {
         float yaw = location.getYaw();
         float pitch = location.getPitch();
 
-        set(path + ".world", world);
-        set(path + ".x", x);
-        set(path + ".y", y);
-        set(path + ".z", z);
-        set(path + ".yaw", yaw);
-        set(path + ".pitch", pitch);
+        this.set(path + ".world", world);
+        this.set(path + ".x", x);
+        this.set(path + ".y", y);
+        this.set(path + ".z", z);
+        this.set(path + ".yaw", yaw);
+        this.set(path + ".pitch", pitch);
     }
 
     public Location getLocation(String path) {
@@ -137,7 +137,7 @@ public class PlayerFileYAML implements PlayerFile {
     @SuppressWarnings("unchecked")
     public ItemStack[] getItemStacks(String path) {
 
-        reloadFile(); // Reload required, doesn't load correctly without.
+        this.reloadFile(); // Reload required, doesn't load correctly without.
 
         ArrayList<ItemStack> returnValue = (ArrayList<ItemStack>) yamlFile.getList(path, new ArrayList<ItemStack>());
 
@@ -153,13 +153,13 @@ public class PlayerFileYAML implements PlayerFile {
     @SuppressWarnings("unchecked")
     public Collection<PotionEffect> getPotionEffects(String path) {
 
-        reloadFile(); // Reload required, doesn't load correctly without.
+        this.reloadFile(); // Reload required, doesn't load correctly without.
 
         return (Collection<PotionEffect>) yamlFile.getList(path, new ArrayList<PotionEffect>());
     }
 
     public void remove(String path) {
         yamlFile.set(path, null);
-        saveFile();
+        this.saveFile();
     }
 }

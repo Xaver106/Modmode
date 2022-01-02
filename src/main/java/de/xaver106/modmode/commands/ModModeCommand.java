@@ -30,48 +30,10 @@ public class ModModeCommand implements CommandExecutor {
 
             if (playerFile.getBool("Mode")) {
                 //Deactivate Modmode
-                //Inventorys
-                player.getInventory().setContents(playerFile.getItemStacks("inventory"));
-                player.getInventory().setArmorContents(playerFile.getItemStacks("armor"));
-                player.updateInventory();
-                player.getEnderChest().setContents(playerFile.getItemStacks("endChest"));
-                clearPlayerPotionEffects(player);
-                player.addPotionEffects(playerFile.getPotionEffects("potionEffects"));
-                player.setHealth(playerFile.getDouble("health"));
-                player.setFoodLevel(playerFile.getInt("foodLevel"));
-                player.setSaturation(playerFile.getFloat("saturation"));
-                player.setExhaustion(playerFile.getFloat("exhaustion"));
-                player.setLevel(playerFile.getInt("level"));
-                player.setExp(playerFile.getFloat("experience"));
-                player.teleport(playerFile.getLocation("location"));
-                playerFile.set("Mode", false);
-
-                player.sendRawMessage(Color.RED + "You are no longer a Mod!");
-                player.setGameMode(GameMode.SURVIVAL);
+                this.disableModForPlayer(player);
             } else {
                 //Activate Modmode
-                //Inventorys
-                playerFile.set("inventory", player.getInventory().getContents());
-                playerFile.set("armor", player.getInventory().getArmorContents());
-                playerFile.set("endChest", player.getEnderChest().getContents());
-                playerFile.set("potionEffects", player.getActivePotionEffects());
-                clearPlayerPotionEffects(player);
-                playerFile.set("health", player.getHealth());
-                playerFile.set("foodLevel", player.getFoodLevel());
-                playerFile.set("saturation", player.getSaturation());
-                playerFile.set("exhaustion", player.getExhaustion());
-                playerFile.set("level", player.getLevel());
-                playerFile.set("experience", player.getExp());
-                playerFile.setLocation("location", player.getLocation());
-
-                playerFile.set("Mode", true);
-                player.getInventory().clear();
-                player.getEnderChest().clear();
-                player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-                player.setFoodLevel(20);
-
-                player.sendMessage(Color.RED + "You are now a Mod!");
-                player.setGameMode(GameMode.CREATIVE);
+                this.enableModForPlayer(player);
             }
 
         }
@@ -79,7 +41,58 @@ public class ModModeCommand implements CommandExecutor {
         return true;
     }
 
+    private void enableModForPlayer(Player player){
+
+        PlayerFile playerFile = playerHandler.getPlayerFile(player);
+
+        playerFile.set("inventory", player.getInventory().getContents());
+        playerFile.set("armor", player.getInventory().getArmorContents());
+        playerFile.set("endChest", player.getEnderChest().getContents());
+        playerFile.set("potionEffects", player.getActivePotionEffects());
+        this.clearPlayerPotionEffects(player);
+        playerFile.set("health", player.getHealth());
+        playerFile.set("foodLevel", player.getFoodLevel());
+        playerFile.set("saturation", player.getSaturation());
+        playerFile.set("exhaustion", player.getExhaustion());
+        playerFile.set("level", player.getLevel());
+        playerFile.set("experience", player.getExp());
+        playerFile.setLocation("location", player.getLocation());
+
+        playerFile.set("Mode", true);
+        player.getInventory().clear();
+        player.getEnderChest().clear();
+        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+        player.setFoodLevel(20);
+
+        player.sendMessage(Color.RED + "You are now a Mod!");
+        player.setGameMode(GameMode.CREATIVE);
+    }
+
+    private void disableModForPlayer(Player player){
+
+        PlayerFile playerFile = playerHandler.getPlayerFile(player);
+
+        player.getInventory().setContents(playerFile.getItemStacks("inventory"));
+        player.getInventory().setArmorContents(playerFile.getItemStacks("armor"));
+        player.updateInventory();
+        player.getEnderChest().setContents(playerFile.getItemStacks("endChest"));
+        this.clearPlayerPotionEffects(player);
+        player.addPotionEffects(playerFile.getPotionEffects("potionEffects"));
+        player.setHealth(playerFile.getDouble("health"));
+        player.setFoodLevel(playerFile.getInt("foodLevel"));
+        player.setSaturation(playerFile.getFloat("saturation"));
+        player.setExhaustion(playerFile.getFloat("exhaustion"));
+        player.setLevel(playerFile.getInt("level"));
+        player.setExp(playerFile.getFloat("experience"));
+        player.teleport(playerFile.getLocation("location"));
+        playerFile.set("Mode", false);
+
+        player.sendRawMessage(Color.RED + "You are no longer a Mod!");
+        player.setGameMode(GameMode.SURVIVAL);
+    }
+
     private void clearPlayerPotionEffects(Player player) {
         for (PotionEffect effect : player.getActivePotionEffects())
             player.removePotionEffect(effect.getType());
     }
+}

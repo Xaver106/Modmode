@@ -31,7 +31,7 @@ public class PlayerHandler {
 
         playerFileList = new HashMap<>();
 
-        reloadFiles();
+        this.reloadFiles();
     }
 
     /**
